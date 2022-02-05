@@ -22,6 +22,13 @@ async function addNote(title) {
   await fs.writeFile(notesPath, JSON.stringify(notes));
   console.log(chalk.green.inverse("item added"));
 }
+async function editNote(id, title) {
+  const notes = await getNotes();
+  const tmpNote = notes.find((note) => note.id === id);
+  tmpNote.title = title;
+  console.log(tmpNote);
+  await fs.writeFile(notesPath, JSON.stringify(notes));
+}
 
 async function getNotes() {
   const notes = await fs.readFile(notesPath, "utf-8");
@@ -39,4 +46,5 @@ module.exports = {
   addNote,
   printNotes,
   removeNote,
+  editNote,
 };
